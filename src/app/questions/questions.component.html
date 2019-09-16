@@ -1,0 +1,69 @@
+<!-- Textarea in an item with a floating label -->
+<ion-grid>
+    <ion-row>
+        <ion-col>
+            <ion-item>
+                <ion-label position="floating">Question</ion-label>
+                <ion-textarea></ion-textarea>
+            </ion-item>
+        </ion-col>
+    </ion-row>
+    <ion-row>
+        <ion-col>
+            <ion-item>
+                <ion-label position="floating">Answer A</ion-label>
+                <ion-input type="text"></ion-input>
+            </ion-item>
+        </ion-col>
+        <ion-col>
+            <ion-item>
+                <ion-label position="floating">Answer B</ion-label>
+                <ion-input type="text"></ion-input>
+            </ion-item>
+        </ion-col>
+    </ion-row>
+    <ion-row>
+        <ion-col>
+            <ion-item>
+                <ion-label position="floating">Answer C</ion-label>
+                <ion-input type="text"></ion-input>
+            </ion-item>
+        </ion-col>
+        <ion-col>
+            <ion-item>
+                <ion-label position="floating">Answer D</ion-label>
+                <ion-input type="text"></ion-input>
+            </ion-item>
+        </ion-col>
+    </ion-row>
+    <ion-button color="primary" (click)="saveQuestion()">Save</ion-button>
+
+    <ion-row>
+        <ion-list>
+            <ion-item *ngFor="let question of questions">
+                <div *ngIf="question.type == 'text'">
+                    <h4>Textfrage.</h4>
+                    <ion-textarea readonly="true">{{question.question}}</ion-textarea>
+                    <ion-button>{{question.answerA}}</ion-button>
+                    <ion-button>{{question.answerB}}</ion-button>
+                    <ion-button>{{question.answerC}}</ion-button>
+                    <ion-button>{{question.answerD}}</ion-button>
+                </div>
+                <div *ngIf="question.type == 'sheet'">
+                    <h4>Notenfrage.</h4>
+                    <ion-textarea readonly="true">{{question.question}}</ion-textarea>
+                    <app-piano></app-piano>
+                </div>
+                <div *ngIf="question.type == 'math'">
+                    <h4>Formelfrage.</h4>
+                    <ion-textarea readonly="true">{{question.question}}</ion-textarea>
+                    <ion-button>{{question.answerA}}</ion-button>
+                    <ion-button>{{question.answerB}}</ion-button>
+                    <ion-button>{{question.answerC}}</ion-button>
+                    <ion-button>{{question.answerD}}</ion-button>
+                </div>
+
+            </ion-item>
+        </ion-list>
+    </ion-row>
+</ion-grid>

@@ -1,5 +1,7 @@
 {
   "name": "exam-helper",
-  "integrations": {},
+  "integrations": {
+    "cordova": {}
+  },
   "type": "angular"
 }
