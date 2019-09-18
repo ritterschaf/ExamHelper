@@ -2,6 +2,7 @@ import {Component, OnInit, OnDestroy} from '@angular/core';
 import {QuestionService} from './question.service';
 import {Question} from './questions.model';
 import {SQLite} from '@ionic-native/sqlite/ngx';
+import {AlertController} from '@ionic/angular';
 
 @Component({
     selector: 'app-questions',
@@ -11,10 +12,12 @@ import {SQLite} from '@ionic-native/sqlite/ngx';
 export class QuestionsComponent implements OnInit {
     shValue: '';
     questions: Question[];
+    toBeChecked: Question;
 
     constructor(
         private questionService: QuestionService,
-        private sqlite: SQLite
+        private sqlite: SQLite,
+        private alertCtrl: AlertController
     ) {
 
     }
@@ -29,8 +32,26 @@ export class QuestionsComponent implements OnInit {
         this.questionService.saveQuestion(qarray);
     }
 
-    checkQuestion() {
+    checkQuestion(que, answer) {
+        this.toBeChecked = this.questionService.checkQuestion(que, answer);
 
+        if (this.toBeChecked.answerA === answer) {
+            this.alertCtrl.create({
+               header: 'Hey!',
+               message: 'It worked!',
+               buttons: [{text: 'Yay!', role: 'cancel'}]
+            }).then(alertEl => {
+                alertEl.present();
+            });
+        } else {
+            this.alertCtrl.create({
+                header: 'Nope.',
+                message: 'Meh.',
+                buttons: [{text: 'Next time.', role: 'cancel'}]
+            }).then(alertEl => {
+                alertEl.present();
+            });
+        }
     }
 
     // ngOnDestroy() {

@@ -13,6 +13,7 @@ import {Subscription} from 'rxjs';
 export class PianoComponent implements OnInit, OnDestroy {
     // @ViewChild('sheetValue', {static: false}) sheetValueRef: ElementRef;
     shValue = '';
+    number = null;
     shSub: Subscription;
 
     constructor(private questionService: QuestionService) {
@@ -53,6 +54,12 @@ export class PianoComponent implements OnInit, OnDestroy {
     }
 
     generateSheet() {
+
+        // this "converts" the note-value into one vex can read, with varying octaves
+        this.number = Math.floor(Math.random() * 3) + 3;
+        this.shValue = `${this.shValue}/${this.number}`;
+
+
         const VF = vexflow.Flow;
 
         // Create an SVG renderer and attach it to the DIV element named "boo".

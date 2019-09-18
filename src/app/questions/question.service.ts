@@ -18,7 +18,7 @@ export class QuestionService {
             type: 'text'
         },
         {
-            question: 'C/4',
+            question: 'C',
             answerA: 'C',
             answerB: 'D#',
             answerC: 'E',
@@ -74,6 +74,15 @@ export class QuestionService {
     saveQuestion(data) {
         // give data to db
     }
+
+    checkQuestion(que: string, answer: string) {
+        return {
+            ...this.questions.find(question => {
+                return question.question === que;
+            })
+        };
+    }
+
 
     getSheetValue(): Observable<string> {
         return this.sheetValue.asObservable();
