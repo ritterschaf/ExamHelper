@@ -1,12 +1,13 @@
 import {Injectable} from '@angular/core';
 import {Question} from './questions.model';
 import {SQLite, SQLiteObject} from '@ionic-native/sqlite/ngx';
+import {Observable, Subject} from 'rxjs';
 
 @Injectable({
     providedIn: 'root'
 })
 export class QuestionService {
-
+    private sheetValue = new Subject<string>();
     private questions: Question[] = [
         {
             question: 'Was ist die Bedeutung von bird?',
@@ -17,8 +18,8 @@ export class QuestionService {
             type: 'text'
         },
         {
-            question: 'C#',
-            answerA: 'C#',
+            question: 'C/4',
+            answerA: 'C',
             answerB: 'D#',
             answerC: 'E',
             answerD: 'F#',
@@ -33,7 +34,6 @@ export class QuestionService {
             type: 'math'
         }
     ];
-
 
     constructor(private sqlite: SQLite) {
     }
@@ -75,6 +75,15 @@ export class QuestionService {
         // give data to db
     }
 
+    getSheetValue(): Observable<string> {
+        return this.sheetValue.asObservable();
+        // this way we have exposed "sheetValue" as an observable
+    }
+
+    updateSheetValue(value: string) {
+        this.sheetValue.next(value);
+        //
+    }
 }
 
 

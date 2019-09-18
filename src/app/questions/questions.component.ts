@@ -9,11 +9,14 @@ import {SQLite} from '@ionic-native/sqlite/ngx';
     styleUrls: ['./questions.component.scss'],
 })
 export class QuestionsComponent implements OnInit {
+    shValue: '';
     questions: Question[];
 
     constructor(
         private questionService: QuestionService,
-        private sqlite: SQLite) {
+        private sqlite: SQLite
+    ) {
+
     }
 
     ngOnInit() {
@@ -26,9 +29,13 @@ export class QuestionsComponent implements OnInit {
         this.questionService.saveQuestion(qarray);
     }
 
-    ngOnDestroy() {
-        this.dbClose();
+    checkQuestion() {
+
     }
+
+    // ngOnDestroy() {
+    //     this.dbClose();
+    // }
 
     dbOpen() {
 
@@ -36,6 +43,11 @@ export class QuestionsComponent implements OnInit {
 
     dbClose() {
 
+    }
+
+    saveSheetValue(value) {
+        console.log('Sheet Value is: ' + value);
+        this.questionService.updateSheetValue(value);
     }
 
 }

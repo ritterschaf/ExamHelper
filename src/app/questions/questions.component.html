@@ -51,6 +51,8 @@
                 </div>
                 <div *ngIf="question.type == 'sheet'">
                     <h4>Notenfrage.</h4>
+                    <div id="boo"></div>
+                    <ion-button (click)="saveSheetValue(question.question)">Valuesave</ion-button>
                     <ion-textarea readonly="true">{{question.question}}</ion-textarea>
                     <app-piano></app-piano>
                 </div>
