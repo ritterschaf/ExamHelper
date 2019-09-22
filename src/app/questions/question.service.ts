@@ -8,6 +8,7 @@ import {Observable, Subject} from 'rxjs';
 })
 export class QuestionService {
     private sheetValue = new Subject<string>();
+    // private questionObs = new Subject<Question>();
     private questions: Question[] = [
         {
             question: 'Was ist die Bedeutung von bird?',
@@ -18,8 +19,8 @@ export class QuestionService {
             type: 'text'
         },
         {
-            question: 'C',
-            answerA: 'C',
+            question: 'F',
+            answerA: 'F',
             answerB: 'D#',
             answerC: 'E',
             answerD: 'F#',
@@ -38,34 +39,6 @@ export class QuestionService {
     constructor(private sqlite: SQLite) {
     }
 
-    // dbOpen() {
-    //
-    //     // document.addEventListener('deviceready', function() {
-    //     //     db = window.sqlitePlugin.openDatabase({
-    //     //         name: 'my.db',
-    //     //         location: 'default',
-    //     //     });
-    //     // });
-    //     // // this.db = this.sqlite.create({
-    //     // //     name: 'data.db',
-    //     // //     location: 'default'
-    //     // //
-    //     // //     // CREATE TABLE IF NOT EXISTS questionpool(question text, answera text, answerb text, answerc text, answerd text, type text
-    //     // //
-    //     // // }).then((db: SQLiteObject) => {
-    //     // //     db.executeSql(
-    //     // //         'CREATE TABLE IF NOT EXISTS questionpool(question text, answera text, answerb text, answerc text, answerd text, type text)',
-    //     // //         [])
-    //     // //         .then(() => console.log('Executed SQL'))
-    //     // //         .catch(e => console.log(e));
-    //     // // })
-    //     // //     .catch(e => console.log(e));
-    // }
-    //
-    // dbClose() {
-    //     this.db.close();
-    // }
-
     getAllQuestions() {
         return [...this.questions];
         // returns a COPY of this questions-array
@@ -73,6 +46,16 @@ export class QuestionService {
 
     saveQuestion(data) {
         // give data to db
+
+        this.questions.push({
+            question: data[0],
+            answerA: data[1],
+            answerB: data[2],
+            answerC: data[3],
+            answerD: data[4],
+            type: data[5]
+        });
+        return this.getAllQuestions();
     }
 
     checkQuestion(que: string, answer: string) {
@@ -83,6 +66,10 @@ export class QuestionService {
         };
     }
 
+
+    // updateQuestions(): Observable<Question> {
+    //     return this.questionObs.asObservable();
+    // }
 
     getSheetValue(): Observable<string> {
         return this.sheetValue.asObservable();

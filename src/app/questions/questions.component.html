@@ -1,10 +1,9 @@
-<!-- Textarea in an item with a floating label -->
 <ion-grid>
     <ion-row>
         <ion-col>
             <ion-item>
                 <ion-label position="floating">Question</ion-label>
-                <ion-textarea></ion-textarea>
+                <ion-textarea [(ngModel)]="ques"></ion-textarea>
             </ion-item>
         </ion-col>
     </ion-row>
@@ -12,13 +11,13 @@
         <ion-col>
             <ion-item>
                 <ion-label position="floating">Answer A</ion-label>
-                <ion-input type="text"></ion-input>
+                <ion-input [(ngModel)]="ansA" type="text"></ion-input>
             </ion-item>
         </ion-col>
         <ion-col>
             <ion-item>
                 <ion-label position="floating">Answer B</ion-label>
-                <ion-input type="text"></ion-input>
+                <ion-input [(ngModel)]="ansB" type="text"></ion-input>
             </ion-item>
         </ion-col>
     </ion-row>
@@ -26,20 +25,27 @@
         <ion-col>
             <ion-item>
                 <ion-label position="floating">Answer C</ion-label>
-                <ion-input type="text"></ion-input>
+                <ion-input [(ngModel)]="ansC" type="text"></ion-input>
             </ion-item>
         </ion-col>
         <ion-col>
             <ion-item>
                 <ion-label position="floating">Answer D</ion-label>
-                <ion-input type="text"></ion-input>
+                <ion-input [(ngModel)]="ansD" type="text"></ion-input>
             </ion-item>
         </ion-col>
     </ion-row>
+    <ion-item>
+        <ion-select placeholder="Select type">
+            <ion-select-option value="text">Text</ion-select-option>
+            <ion-select-option value="math">Math</ion-select-option>
+            <ion-select-option value="sheet">Sheet Music</ion-select-option>
+        </ion-select>
+    </ion-item>
     <ion-button color="primary" (click)="saveQuestion()">Save</ion-button>
 
     <ion-row>
-        <ion-list>
+        <ion-list id="exam-box">
             <ion-item *ngFor="let question of questions">
                 <div *ngIf="question.type == 'text'">
                     <h4>Textfrage.</h4>
@@ -58,7 +64,6 @@
                     <ion-button (click)="checkQuestion(question.question, question.answerB)">{{question.answerB}}</ion-button>
                     <ion-button (click)="checkQuestion(question.question, question.answerC)">{{question.answerC}}</ion-button>
                     <ion-button (click)="checkQuestion(question.question, question.answerD)">{{question.answerD}}</ion-button>
-
                     <app-piano></app-piano>
                 </div>
                 <div *ngIf="question.type == 'math'">
