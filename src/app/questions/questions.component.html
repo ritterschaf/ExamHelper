@@ -69,6 +69,7 @@
                 <div *ngIf="question.type == 'math'">
                     <h4>Formelfrage.</h4>
                     <ion-textarea readonly="true">{{question.question}}</ion-textarea>
+                    <app-math></app-math>
                     <ion-button (click)="checkQuestion(question.question, question.answerA)">{{question.answerA}}</ion-button>
                     <ion-button (click)="checkQuestion(question.question, question.answerB)">{{question.answerB}}</ion-button>
                     <ion-button (click)="checkQuestion(question.question, question.answerC)">{{question.answerC}}</ion-button>

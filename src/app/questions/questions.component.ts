@@ -4,6 +4,7 @@ import {Question} from './questions.model';
 import {AlertController} from '@ionic/angular';
 import * as vexflow from 'vexflow';
 import {Observable, Subscription} from 'rxjs';
+import {KatexOptions} from 'ng-katex';
 
 @Component({
     selector: 'app-questions',
@@ -15,6 +16,7 @@ export class QuestionsComponent implements OnInit, OnDestroy {
     questions: Question[];
     toBeChecked: Question;
 
+    equation: string;
     ques: string;
     ansA: string;
     ansB: string;
@@ -35,6 +37,7 @@ export class QuestionsComponent implements OnInit, OnDestroy {
 
     ngOnInit() {
         this.questions = this.questionService.getAllQuestions();
+
     }
 
     ngOnDestroy(): void {

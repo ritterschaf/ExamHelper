@@ -11,6 +11,7 @@ import {AppRoutingModule} from './app-routing.module';
 import {ServiceWorkerModule} from '@angular/service-worker';
 import {environment} from '../environments/environment';
 
+import {KatexModule} from 'ng-katex';
 import {SQLite} from '@ionic-native/sqlite/ngx';
 
 @NgModule({
@@ -21,6 +22,7 @@ import {SQLite} from '@ionic-native/sqlite/ngx';
         StatusBar,
         SplashScreen,
         SQLite,
+        KatexModule,
         {provide: RouteReuseStrategy, useClass: IonicRouteStrategy}
     ],
     bootstrap: [AppComponent]
