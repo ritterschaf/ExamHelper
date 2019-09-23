@@ -27,7 +27,7 @@ export class QuestionService {
             type: 'sheet'
         },
         {
-            question: 'Wurzel aus 16',
+            question: '\\sqrt{16}',
             answerA: '4',
             answerB: '2',
             answerC: '42',
