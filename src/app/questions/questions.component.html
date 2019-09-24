@@ -50,30 +50,42 @@
                 <div *ngIf="question.type == 'text'">
                     <h4>Textfrage.</h4>
                     <ion-textarea readonly="true">{{question.question}}</ion-textarea>
-                    <ion-button (click)="checkQuestion(question.question, question.answerA)">{{question.answerA}}</ion-button>
-                    <ion-button (click)="checkQuestion(question.question, question.answerB)">{{question.answerB}}</ion-button>
-                    <ion-button (click)="checkQuestion(question.question, question.answerC)">{{question.answerC}}</ion-button>
-                    <ion-button (click)="checkQuestion(question.question, question.answerD)">{{question.answerD}}</ion-button>
+                    <ion-button
+                            (click)="checkQuestion(question.question, question.answerA)">{{question.answerA}}</ion-button>
+                    <ion-button
+                            (click)="checkQuestion(question.question, question.answerB)">{{question.answerB}}</ion-button>
+                    <ion-button
+                            (click)="checkQuestion(question.question, question.answerC)">{{question.answerC}}</ion-button>
+                    <ion-button
+                            (click)="checkQuestion(question.question, question.answerD)">{{question.answerD}}</ion-button>
                 </div>
                 <div *ngIf="question.type == 'sheet'">
                     <h4>Notenfrage.</h4>
-                    <div id="boo"></div>
-                    <ion-button (click)="saveSheetValue(question.question)">Valuesave</ion-button>
-                    <ion-textarea readonly="true">{{question.question}}</ion-textarea>
-                    <ion-button (click)="checkQuestion(question.question, question.answerA)">{{question.answerA}}</ion-button>
-                    <ion-button (click)="checkQuestion(question.question, question.answerB)">{{question.answerB}}</ion-button>
-                    <ion-button (click)="checkQuestion(question.question, question.answerC)">{{question.answerC}}</ion-button>
-                    <ion-button (click)="checkQuestion(question.question, question.answerD)">{{question.answerD}}</ion-button>
+                    <app-sheet [shValue]=question.question ></app-sheet>
+                    <ion-button
+                            (click)="checkQuestion(question.question, question.answerA)">{{question.answerA}}</ion-button>
+                    <ion-button
+                            (click)="checkQuestion(question.question, question.answerB)">{{question.answerB}}</ion-button>
+                    <ion-button
+                            (click)="checkQuestion(question.question, question.answerC)">{{question.answerC}}</ion-button>
+                    <ion-button
+                            (click)="checkQuestion(question.question, question.answerD)">{{question.answerD}}</ion-button>
                     <app-piano></app-piano>
                 </div>
                 <div *ngIf="question.type == 'math'">
                     <h4>Formelfrage.</h4>
                     <ion-textarea readonly="true">{{question.question}}</ion-textarea>
-                    <app-math [mathQuestion]=question.question></app-math>
-                    <ion-button (click)="checkQuestion(question.question, question.answerA)">{{question.answerA}}</ion-button>
-                    <ion-button (click)="checkQuestion(question.question, question.answerB)">{{question.answerB}}</ion-button>
-                    <ion-button (click)="checkQuestion(question.question, question.answerC)">{{question.answerC}}</ion-button>
-                    <ion-button (click)="checkQuestion(question.question, question.answerD)">{{question.answerD}}</ion-button>
+                    <ion-item>
+                        <app-math [mathQuestion]=question.question></app-math>
+                    </ion-item>
+                    <ion-button
+                            (click)="checkQuestion(question.question, question.answerA)">{{question.answerA}}</ion-button>
+                    <ion-button
+                            (click)="checkQuestion(question.question, question.answerB)">{{question.answerB}}</ion-button>
+                    <ion-button
+                            (click)="checkQuestion(question.question, question.answerC)">{{question.answerC}}</ion-button>
+                    <ion-button
+                            (click)="checkQuestion(question.question, question.answerD)">{{question.answerD}}</ion-button>
 
                 </div>
 

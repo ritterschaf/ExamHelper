@@ -9,6 +9,7 @@ import {QuestionsComponent} from '../questions/questions.component';
 import {PianoComponent} from '../piano/piano.component';
 import {KatexModule} from 'ng-katex';
 import {MathComponent} from '../questions/math/math.component';
+import {SheetComponent} from '../questions/sheet/sheet.component';
 
 @NgModule({
     imports: [
@@ -23,6 +24,6 @@ import {MathComponent} from '../questions/math/math.component';
         ]),
         KatexModule
     ],
-    declarations: [HomePage, QuestionsComponent, PianoComponent, MathComponent]
+    declarations: [HomePage, QuestionsComponent, PianoComponent, MathComponent, SheetComponent]
 })
 export class HomePageModule {}

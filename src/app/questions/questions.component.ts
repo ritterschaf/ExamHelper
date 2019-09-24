@@ -91,9 +91,9 @@ export class QuestionsComponent implements OnInit, OnDestroy {
         }
     }
 
-    saveSheetValue(value) {
-        console.log('Sheet Value is: ' + value);
-        this.questionService.updateSheetValue(value);
-    }
+    // saveSheetValue(value) {
+    //     console.log('Sheet Value is: ' + value);
+    //     this.questionService.updateSheetValue(value);
+    // }
 
 }

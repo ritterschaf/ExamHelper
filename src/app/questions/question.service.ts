@@ -19,8 +19,8 @@ export class QuestionService {
             type: 'text'
         },
         {
-            question: 'F',
-            answerA: 'F',
+            question: 'B',
+            answerA: 'B',
             answerB: 'D#',
             answerC: 'E',
             answerD: 'F#',
