@@ -1,95 +1,123 @@
-<ion-grid>
-    <ion-row>
-        <ion-col>
-            <ion-item>
-                <ion-label position="floating">Question</ion-label>
-                <ion-textarea [(ngModel)]="ques"></ion-textarea>
+<ion-segment color='primary'>
+    <ion-segment-button  (click)="switch('questionbox')">Questions</ion-segment-button>
+    <ion-segment-button  (click)="switch('exambox')">Exam</ion-segment-button>
+</ion-segment>
+<ion-grid [ngSwitch]="boxes">
+    <div *ngSwitchCase="'questionbox'">
+        <ion-row>
+            <ion-col>
+                <ion-item>
+                    <ion-label position="floating">Question</ion-label>
+                    <ion-textarea [(ngModel)]="ques"></ion-textarea>
+                </ion-item>
+            </ion-col>
+        </ion-row>
+        <ion-row>
+            <ion-col>
+                <ion-item>
+                    <ion-label position="floating">Answer A</ion-label>
+                    <ion-input [(ngModel)]="ansA" type="text"></ion-input>
+                </ion-item>
+            </ion-col>
+            <ion-col>
+                <ion-item>
+                    <ion-label position="floating">Answer B</ion-label>
+                    <ion-input [(ngModel)]="ansB" type="text"></ion-input>
+                </ion-item>
+            </ion-col>
+        </ion-row>
+        <ion-row>
+            <ion-col>
+                <ion-item>
+                    <ion-label position="floating">Answer C</ion-label>
+                    <ion-input [(ngModel)]="ansC" type="text"></ion-input>
+                </ion-item>
+            </ion-col>
+            <ion-col>
+                <ion-item>
+                    <ion-label position="floating">Answer D</ion-label>
+                    <ion-input [(ngModel)]="ansD" type="text"></ion-input>
+                </ion-item>
+            </ion-col>
+        </ion-row>
+        <ion-radio-group>
+            <ion-item (ionSelect)="radioSelect($event)">
+                <ion-label>Text</ion-label>
+                <ion-radio name="text" value="text"></ion-radio>
             </ion-item>
-        </ion-col>
-    </ion-row>
-    <ion-row>
-        <ion-col>
-            <ion-item>
-                <ion-label position="floating">Answer A</ion-label>
-                <ion-input [(ngModel)]="ansA" type="text"></ion-input>
+            <ion-item (ionSelect)="radioSelect($event)">
+                <ion-label>Noten</ion-label>
+                <ion-radio name="sheet" value="sheet"></ion-radio>
             </ion-item>
-        </ion-col>
-        <ion-col>
-            <ion-item>
-                <ion-label position="floating">Answer B</ion-label>
-                <ion-input [(ngModel)]="ansB" type="text"></ion-input>
+            <ion-item (ionSelect)="radioSelect($event)">
+                <ion-label>Mathe</ion-label>
+                <ion-radio name="math" value="math"></ion-radio>
             </ion-item>
-        </ion-col>
-    </ion-row>
-    <ion-row>
-        <ion-col>
-            <ion-item>
-                <ion-label position="floating">Answer C</ion-label>
-                <ion-input [(ngModel)]="ansC" type="text"></ion-input>
-            </ion-item>
-        </ion-col>
-        <ion-col>
-            <ion-item>
-                <ion-label position="floating">Answer D</ion-label>
-                <ion-input [(ngModel)]="ansD" type="text"></ion-input>
-            </ion-item>
-        </ion-col>
-    </ion-row>
-    <ion-item>
-        <ion-select placeholder="Select type">
-            <ion-select-option value="text">Text</ion-select-option>
-            <ion-select-option value="math">Math</ion-select-option>
-            <ion-select-option value="sheet">Sheet Music</ion-select-option>
-        </ion-select>
-    </ion-item>
-    <ion-button color="primary" (click)="saveQuestion()">Save</ion-button>
+        </ion-radio-group>
 
-    <ion-row>
-        <ion-list id="exam-box">
-            <ion-item *ngFor="let question of questions">
-                <div *ngIf="question.type == 'text'">
-                    <h4>Textfrage.</h4>
+        <ion-button color="primary" (click)="saveQuestion()">Save</ion-button>
+    </div>
+    <ion-row *ngSwitchCase="'exambox'">
+        <!--<ion-list id="exam-box">-->
+        <ion-slides pager="true">
+            <ion-slide *ngFor="let question of questions">
+                <div *ngIf="question.answertype == 'text'">
                     <ion-textarea readonly="true">{{question.question}}</ion-textarea>
                     <ion-button
-                            (click)="checkQuestion(question.question, question.answerA)">{{question.answerA}}</ion-button>
+                            (click)="checkQuestion(question.question, question.answerA)">{{question.answerA}}
+                    </ion-button>
                     <ion-button
-                            (click)="checkQuestion(question.question, question.answerB)">{{question.answerB}}</ion-button>
+                            (click)="checkQuestion(question.question, question.answerB)">{{question.answerB}}
+                    </ion-button>
                     <ion-button
-                            (click)="checkQuestion(question.question, question.answerC)">{{question.answerC}}</ion-button>
+                            (click)="checkQuestion(question.question, question.answerC)">{{question.answerC}}
+                    </ion-button>
                     <ion-button
-                            (click)="checkQuestion(question.question, question.answerD)">{{question.answerD}}</ion-button>
+                            (click)="checkQuestion(question.question, question.answerD)">{{question.answerD}}
+                    </ion-button>
                 </div>
-                <div *ngIf="question.type == 'sheet'">
-                    <h4>Notenfrage.</h4>
-                    <app-sheet [shValue]=question.question ></app-sheet>
+                <div *ngIf="question.answertype == 'sheet'" margin-bottom="15px">
+                    <app-sheet [shValue]=question.question></app-sheet>
                     <ion-button
-                            (click)="checkQuestion(question.question, question.answerA)">{{question.answerA}}</ion-button>
+                            (click)="checkQuestion(question.question, question.answerA)">{{question.answerA}}
+                    </ion-button>
                     <ion-button
-                            (click)="checkQuestion(question.question, question.answerB)">{{question.answerB}}</ion-button>
+                            (click)="checkQuestion(question.question, question.answerB)">{{question.answerB}}
+                    </ion-button>
                     <ion-button
-                            (click)="checkQuestion(question.question, question.answerC)">{{question.answerC}}</ion-button>
+                            (click)="checkQuestion(question.question, question.answerC)">{{question.answerC}}
+                    </ion-button>
                     <ion-button
-                            (click)="checkQuestion(question.question, question.answerD)">{{question.answerD}}</ion-button>
-                    <app-piano></app-piano>
+                            (click)="checkQuestion(question.question, question.answerD)">{{question.answerD}}
+                    </ion-button>
+                    <!--<app-piano></app-piano>-->
                 </div>
-                <div *ngIf="question.type == 'math'">
-                    <h4>Formelfrage.</h4>
-                    <ion-textarea readonly="true">{{question.question}}</ion-textarea>
+                <div *ngIf="question.answertype == 'math'">
                     <ion-item>
                         <app-math [mathQuestion]=question.question></app-math>
                     </ion-item>
                     <ion-button
-                            (click)="checkQuestion(question.question, question.answerA)">{{question.answerA}}</ion-button>
+                            (click)="checkQuestion(question.question, question.answerA)">{{question.answerA}}
+                    </ion-button>
                     <ion-button
-                            (click)="checkQuestion(question.question, question.answerB)">{{question.answerB}}</ion-button>
+                            (click)="checkQuestion(question.question, question.answerB)">{{question.answerB}}
+                    </ion-button>
                     <ion-button
-                            (click)="checkQuestion(question.question, question.answerC)">{{question.answerC}}</ion-button>
+                            (click)="checkQuestion(question.question, question.answerC)">{{question.answerC}}
+                    </ion-button>
                     <ion-button
-                            (click)="checkQuestion(question.question, question.answerD)">{{question.answerD}}</ion-button>
+                            (click)="checkQuestion(question.question, question.answerD)">{{question.answerD}}
+                    </ion-button>
 
                 </div>
 
-            </ion-item>
-        </ion-list>
+            </ion-slide>
+            <ion-slide>
+                <h4>Statistik anschauen?</h4>
+                <ion-button href="/statistics">Zur Statistik...</ion-button>
+
+            </ion-slide>
+        </ion-slides>
+        <!--</ion-list>-->
     </ion-row>
 </ion-grid>

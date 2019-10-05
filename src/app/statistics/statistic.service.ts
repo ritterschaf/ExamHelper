@@ -1,9 +1,19 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 
 @Injectable({
-  providedIn: 'root'
+    providedIn: 'root'
 })
 export class StatisticService {
 
-  constructor() { }
+    // krieg hier Informationen vom questions-component und gib die per Observable an
+    // die statistics page weiter.
+
+    constructor() {
+    }
+
+
+    generateStatistic(right, wrong) {
+
+    }
+
 }

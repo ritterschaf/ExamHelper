@@ -1,10 +1,11 @@
-import {Component, OnInit, OnDestroy} from '@angular/core';
+import {Component, OnInit, OnDestroy, Input} from '@angular/core';
 import {QuestionService} from './question.service';
 import {Question} from './questions.model';
 import {AlertController} from '@ionic/angular';
 import * as vexflow from 'vexflow';
 import {Observable, Subscription} from 'rxjs';
 import {KatexOptions} from 'ng-katex';
+import {StatisticService} from '../statistics/statistic.service';
 
 @Component({
     selector: 'app-questions',
@@ -13,8 +14,12 @@ import {KatexOptions} from 'ng-katex';
 })
 export class QuestionsComponent implements OnInit, OnDestroy {
     // questionSub: Subscription;
+    public boxes = 'questionbox';
     questions: Question[];
     toBeChecked: Question;
+
+    private rightAnswers = 0;
+    private wrongAnswers = 0;
 
     equation: string;
     ques: string;
@@ -35,8 +40,19 @@ export class QuestionsComponent implements OnInit, OnDestroy {
 
     }
 
+    // gets questions when it is initialized and subscribes to database.
     ngOnInit() {
         this.questions = this.questionService.getAllQuestions();
+
+        // this.questionService.getDatabaseState().subscribe(ready => {
+        //     if (ready) {
+        //         // perform actions...like e.g. getting questions from db.
+        //         this.questionService.getQuestions().subscribe(array => {
+        //             console.log('questions from db: ', array);
+        //             this.questions = array;
+        //         });
+        //     }
+        // });
 
     }
 
@@ -44,6 +60,16 @@ export class QuestionsComponent implements OnInit, OnDestroy {
         // this.questionSub.unsubscribe();
     }
 
+    switch(box) {
+        this.boxes = box;
+    }
+
+    radioSelect(event) {
+        console.log('radio: ', event.detail.value);
+        this.type = event.detail.value;
+    }
+
+    // gets the input data, compiles it into an array and gives this so saveQuestions in the service
     saveQuestion() {
         console.log(this.type);
         if (this.ques === undefined || this.ques === '' ||
@@ -69,6 +95,7 @@ export class QuestionsComponent implements OnInit, OnDestroy {
         }
     }
 
+    // this checks the question and gives out an alert to inform you
     checkQuestion(que, answer) {
         this.toBeChecked = this.questionService.checkQuestion(que, answer);
 
@@ -79,6 +106,7 @@ export class QuestionsComponent implements OnInit, OnDestroy {
                 buttons: [{text: 'Yay!', role: 'cancel'}]
             }).then(alertEl => {
                 alertEl.present();
+                this.rightAnswers++;
             });
         } else {
             this.alertCtrl.create({
@@ -87,8 +115,17 @@ export class QuestionsComponent implements OnInit, OnDestroy {
                 buttons: [{text: 'Next time.', role: 'cancel'}]
             }).then(alertEl => {
                 alertEl.present();
+                this.wrongAnswers++;
             });
         }
+        // let slider advance
+        // and save values!
+    }
+
+    goToStatistic() {
+        // gib Info an den Statistic-Service.
+
+
     }
 
     // saveSheetValue(value) {

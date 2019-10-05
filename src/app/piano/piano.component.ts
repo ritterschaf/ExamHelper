@@ -16,8 +16,8 @@ export class PianoComponent implements OnInit, OnDestroy {
     shSub: Subscription;
 
     constructor(private questionService: QuestionService) {
-        this.shSub = this.questionService.getSheetValue()
-            .subscribe(sheetValue => this.shValue = sheetValue);
+        // this.shSub = this.questionService.getSheetValue()
+        //     .subscribe(sheetValue => this.shValue = sheetValue);
     }
 
     ngOnInit() {
