@@ -1,10 +1,7 @@
-import {Component, OnInit, OnDestroy, Input} from '@angular/core';
+import {Component, OnInit, OnDestroy, ViewChild} from '@angular/core';
 import {QuestionService} from './question.service';
 import {Question} from './questions.model';
-import {AlertController} from '@ionic/angular';
-import * as vexflow from 'vexflow';
-import {Observable, Subscription} from 'rxjs';
-import {KatexOptions} from 'ng-katex';
+import {AlertController, IonSlides} from '@ionic/angular';
 import {StatisticService} from '../statistics/statistic.service';
 
 @Component({
@@ -15,11 +12,20 @@ import {StatisticService} from '../statistics/statistic.service';
 export class QuestionsComponent implements OnInit, OnDestroy {
     // questionSub: Subscription;
     public boxes = 'questionbox';
+
     questions: Question[];
     toBeChecked: Question;
 
-    private rightAnswers = 0;
-    private wrongAnswers = 0;
+    private rightAnswers: number;
+    private wrongAnswers: number;
+
+    @ViewChild('examslider', {static: false}) examslider: IonSlides;
+
+    slider: any;
+    slideOpts = {
+        slidesPerView: 1,
+        lockSwipes: true
+    };
 
     equation: string;
     ques: string;
@@ -31,7 +37,8 @@ export class QuestionsComponent implements OnInit, OnDestroy {
 
     constructor(
         private questionService: QuestionService,
-        private alertCtrl: AlertController
+        private alertCtrl: AlertController,
+        private statisticService: StatisticService
     ) {
         // this.questionSub = this.questionService.updateQuestions().subscribe(newData => {
         //     this.questions.push(newData);
@@ -43,7 +50,8 @@ export class QuestionsComponent implements OnInit, OnDestroy {
     // gets questions when it is initialized and subscribes to database.
     ngOnInit() {
         this.questions = this.questionService.getAllQuestions();
-
+        this.rightAnswers = 0;
+        this.wrongAnswers = 0;
         // this.questionService.getDatabaseState().subscribe(ready => {
         //     if (ready) {
         //         // perform actions...like e.g. getting questions from db.
@@ -58,6 +66,19 @@ export class QuestionsComponent implements OnInit, OnDestroy {
 
     ngOnDestroy(): void {
         // this.questionSub.unsubscribe();
+    }
+
+    advanceSlide(object, slideView) {
+        slideView.lockSwipes(false);
+        slideView.slideNext(500);
+        slideView.lockSwipes(true);
+    }
+
+    endExam() {
+        console.log('You chose to end the exam. Right: ' + this.rightAnswers + ' and Wrong: ' + this.wrongAnswers);
+        this.statisticService.generateStatistic(this.rightAnswers, this.wrongAnswers);
+        this.rightAnswers = 0;
+        this.wrongAnswers = 0;
     }
 
     switch(box) {
@@ -100,23 +121,26 @@ export class QuestionsComponent implements OnInit, OnDestroy {
         this.toBeChecked = this.questionService.checkQuestion(que, answer);
 
         if (this.toBeChecked.answerA === answer) {
-            this.alertCtrl.create({
-                header: 'Your answer was...',
-                message: '...correct! Yay!',
-                buttons: [{text: 'Yay!', role: 'cancel'}]
-            }).then(alertEl => {
-                alertEl.present();
-                this.rightAnswers++;
-            });
+            this.rightAnswers = this.rightAnswers + 1;
+            console.log(this.rightAnswers);
+            // this.alertCtrl.create({
+            //     header: 'Your answer was...',
+            //     message: '...correct! Yay!',
+            //     buttons: [{text: 'Yay!', role: 'cancel'}]
+            // }).then(alertEl => {
+            //     alertEl.present();
+            //
+            // });
         } else {
-            this.alertCtrl.create({
-                header: 'Your answer was...',
-                message: '...wrong. Sorry.',
-                buttons: [{text: 'Next time.', role: 'cancel'}]
-            }).then(alertEl => {
-                alertEl.present();
-                this.wrongAnswers++;
-            });
+            this.wrongAnswers = this.wrongAnswers + 1;
+            console.log(this.wrongAnswers);
+            // this.alertCtrl.create({
+            //     header: 'Your answer was...',
+            //     message: '...wrong. Sorry.',
+            //     buttons: [{text: 'Next time.', role: 'cancel'}]
+            // }).then(alertEl => {
+            //     alertEl.present();
+            // });
         }
         // let slider advance
         // and save values!

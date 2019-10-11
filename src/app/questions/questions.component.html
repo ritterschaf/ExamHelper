@@ -59,7 +59,8 @@
     </div>
     <ion-row *ngSwitchCase="'exambox'">
         <!--<ion-list id="exam-box">-->
-        <ion-slides pager="true">
+        <ion-button (click)="advanceSlide(slider, examslider)">Advance</ion-button>
+        <ion-slides #examslider pager="true" [options]="slideOpts">
             <ion-slide *ngFor="let question of questions">
                 <div *ngIf="question.answertype == 'text'">
                     <ion-textarea readonly="true">{{question.question}}</ion-textarea>
@@ -77,7 +78,7 @@
                     </ion-button>
                 </div>
                 <div *ngIf="question.answertype == 'sheet'" margin-bottom="15px">
-                    <app-sheet [shValue]=question.question></app-sheet>
+                    <app-sheet [shValue]=question.question [id]="question.id"></app-sheet>
                     <ion-button
                             (click)="checkQuestion(question.question, question.answerA)">{{question.answerA}}
                     </ion-button>
@@ -114,6 +115,7 @@
             </ion-slide>
             <ion-slide>
                 <h4>Statistik anschauen?</h4>
+                <ion-button (click)="endExam()">End</ion-button>
                 <ion-button href="/statistics">Zur Statistik...</ion-button>
 
             </ion-slide>

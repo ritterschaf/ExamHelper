@@ -150,6 +150,11 @@ export class QuestionService {
         return this.questionSubject.asObservable();
     }
 
+    deleteQuestions(questiontext) {
+        this.questions = this.questions.filter(question => {
+            return question.question !== questiontext;
+        });
+    }
 
     // dbOpen() {
     //

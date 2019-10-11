@@ -10,7 +10,8 @@ import * as vexflow from 'vexflow';
 export class SheetComponent implements OnInit {
     number = null;
     @Input() shValue = '';
-
+    @Input() id: number;
+    // private name = 'boo' + this.id.toString();
     constructor() {
     }
 
@@ -24,6 +25,7 @@ export class SheetComponent implements OnInit {
         const VF = vexflow.Flow;
 
         // Create an SVG renderer and attach it to the DIV element named "boo".
+        // const div = document.getElementById(name);
         const div = document.getElementById('boo');
         console.log(div);
         const renderer = new VF.Renderer(div, VF.Renderer.Backends.SVG);
