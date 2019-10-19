@@ -10,6 +10,7 @@ import {PianoComponent} from '../piano/piano.component';
 import {KatexModule} from 'ng-katex';
 import {MathComponent} from '../questions/math/math.component';
 import {SheetComponent} from '../questions/sheet/sheet.component';
+import {StatisticsComponent} from '../statistics/statistics.component';
 
 @NgModule({
     imports: [
@@ -20,10 +21,17 @@ import {SheetComponent} from '../questions/sheet/sheet.component';
             {
                 path: '',
                 component: HomePage
+            },
+            {
+                path: 'statistic',
+                component: StatisticsComponent
             }
         ]),
         KatexModule
     ],
-    declarations: [HomePage, QuestionsComponent, PianoComponent, MathComponent, SheetComponent]
+    exports: [
+        StatisticsComponent
+    ],
+    declarations: [HomePage, QuestionsComponent, PianoComponent, MathComponent, SheetComponent, StatisticsComponent]
 })
 export class HomePageModule {}

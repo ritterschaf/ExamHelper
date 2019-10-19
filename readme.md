@@ -20,3 +20,7 @@ npm install @ionic-native/sqlite
 
 ionic cordova plugin add uk.co.workingedge.cordova.plugin.sqliteporter
 npm install @ionic-native/sqlite-porter
+
+ionic cordova plugin add cordova-plugin-file
+npm install --save @ionic-native/file@4
+npm install --save @ionic-native/file@4.20.0

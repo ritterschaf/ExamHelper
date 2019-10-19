@@ -1,0 +1,62 @@
+[
+  {
+    "id": 1,
+    "question": "ICH BIN QUESTIONPOOL",
+    "answerA": "Lol, Deadpools kleiner Bruder?",
+    "answerB": "Was schreib ich hier",
+    "answerC": "Ich sollte aufhören",
+    "answerD": "Oof.",
+    "answertype": "text",
+    "rights": 2
+  },
+  {
+    "id": 2,
+    "question": "B",
+    "answerA": "B",
+    "answerB": "D#",
+    "answerC": "G",
+    "answerD": "F#",
+    "answertype": "sheet",
+    "rights": 4
+  },
+  {
+    "id": 3,
+    "question": "\\sqrt{16}",
+    "answerA": "4",
+    "answerB": "2",
+    "answerC": "42",
+    "answerD": "6",
+    "answertype": "math",
+    "rights": 0
+  },
+  {
+    "id": 4,
+    "question": "x^2+x^2",
+    "answerA": "2x^2",
+    "answerB": "x^4",
+    "answerC": "x^8",
+    "answerD": "4x",
+    "answertype": "math",
+    "rights": 5
+  },
+  {
+    "id": 5,
+    "question": "Was bedeutet Sleep?",
+    "answerA": "Schlaf",
+    "answerB": "Schaf",
+    "answerC": "Wolke",
+    "answerD": "Wolle",
+    "answertype": "text",
+    "rights": 7
+  },
+  {
+    "id": 6,
+    "question": "D",
+    "answerA": "D",
+    "answerB": "F",
+    "answerC": "G",
+    "answerD": "H",
+    "answertype": "sheet",
+    "rights": 3
+  }
+]

@@ -1,0 +1,21 @@
+<!--<ion-header>
+  <ion-toolbar color="primary">
+    <ion-title>Statistik</ion-title>
+  </ion-toolbar>
+</ion-header>-->
+
+
+<h2>Gratulation, du hast es geschafft!</h2>
+<h4>Du hast {{right}} von {{amount}} Fragen richtig beantwortet!</h4>
+
+<div *ngIf="deletable == true">
+    <h4>Die folgenden Fragen hast du mehr als fünf Mal richtig beantwortet. Aus Fragenspeicher löschen?</h4>
+    <ion-list *ngFor="let question of questions">
+        <ion-row class="deleteBox" *ngIf="question.rights > 5">
+            <h5 style="font-weight: bold">{{question.question}}</h5>
+            <ion-button (click)="deleteQuestion(question.question)" expand="block" >
+                <ion-icon name="trash" slot="end"></ion-icon>
+            </ion-button>
+        </ion-row>
+    </ion-list>
+</div>

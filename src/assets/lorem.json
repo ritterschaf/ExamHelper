@@ -1,0 +1,12 @@
+[
+  {
+    "id": 1,
+    "question": "Lorem Ipsum...",
+    "answerA": "...Dolor Sit",
+    "answerB": "...Alea iacta est",
+    "answerC": "...errare humanum est",
+    "answerD": "...sum fui esse.",
+    "answertype": "text",
+    "rights": 2
+  }
+]

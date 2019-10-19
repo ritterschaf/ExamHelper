@@ -3,6 +3,7 @@ import {QuestionService} from './question.service';
 import {Question} from './questions.model';
 import {AlertController, IonSlides} from '@ionic/angular';
 import {StatisticService} from '../statistics/statistic.service';
+import {Subscription} from 'rxjs';
 
 @Component({
     selector: 'app-questions',
@@ -10,7 +11,7 @@ import {StatisticService} from '../statistics/statistic.service';
     styleUrls: ['./questions.component.scss'],
 })
 export class QuestionsComponent implements OnInit, OnDestroy {
-    // questionSub: Subscription;
+    questionSub: Subscription;
     public boxes = 'questionbox';
 
     questions: Question[];
@@ -21,7 +22,6 @@ export class QuestionsComponent implements OnInit, OnDestroy {
 
     @ViewChild('examslider', {static: false}) examslider: IonSlides;
 
-    slider: any;
     slideOpts = {
         slidesPerView: 1,
         lockSwipes: true
@@ -40,16 +40,18 @@ export class QuestionsComponent implements OnInit, OnDestroy {
         private alertCtrl: AlertController,
         private statisticService: StatisticService
     ) {
-        // this.questionSub = this.questionService.updateQuestions().subscribe(newData => {
-        //     this.questions.push(newData);
-        //     console.log('I was updated!');
-        // });
+        this.questionSub = this.questionService.getQuestions().subscribe(newData => {
+            this.questions = newData;
+            console.log('I was updated!');
+        });
 
     }
 
     // gets questions when it is initialized and subscribes to database.
     ngOnInit() {
-        this.questions = this.questionService.getAllQuestions();
+        // this.questions = this.questionService.jsonload();
+        // this.questions = this.questionService.getAllQuestions();
+        this.questionService.jsonload();
         this.rightAnswers = 0;
         this.wrongAnswers = 0;
         // this.questionService.getDatabaseState().subscribe(ready => {
@@ -62,16 +64,11 @@ export class QuestionsComponent implements OnInit, OnDestroy {
         //     }
         // });
 
+
     }
 
     ngOnDestroy(): void {
-        // this.questionSub.unsubscribe();
-    }
-
-    advanceSlide(object, slideView) {
-        slideView.lockSwipes(false);
-        slideView.slideNext(500);
-        slideView.lockSwipes(true);
+        this.questionSub.unsubscribe();
     }
 
     endExam() {
@@ -88,6 +85,11 @@ export class QuestionsComponent implements OnInit, OnDestroy {
     radioSelect(event) {
         console.log('radio: ', event.detail.value);
         this.type = event.detail.value;
+    }
+
+    jsonload() {
+        this.questionService.jsonload();
+        // this.questionService.getAllQuestions();
     }
 
     // gets the input data, compiles it into an array and gives this so saveQuestions in the service
@@ -112,7 +114,8 @@ export class QuestionsComponent implements OnInit, OnDestroy {
             }
             const array: string[] = [this.ques, this.ansA, this.ansB, this.ansC, this.ansD, this.type];
             console.log(array);
-            this.questions = this.questionService.saveQuestion(array);
+            // this.questions = this.questionService.saveQuestion(array);
+            this.questionService.saveQuestion(array);
         }
     }
 
@@ -122,6 +125,7 @@ export class QuestionsComponent implements OnInit, OnDestroy {
 
         if (this.toBeChecked.answerA === answer) {
             this.rightAnswers = this.rightAnswers + 1;
+            this.questionService.updateRights(que);
             console.log(this.rightAnswers);
             // this.alertCtrl.create({
             //     header: 'Your answer was...',
@@ -144,17 +148,20 @@ export class QuestionsComponent implements OnInit, OnDestroy {
         }
         // let slider advance
         // and save values!
+
+        // this.examslider.lockSwipes(false);
+        this.examslider.slideNext(500);
+        // this.examslider.lockSwipes(true);
     }
 
-    goToStatistic() {
-        // gib Info an den Statistic-Service.
 
-
+    sendToStatistic() {
+        this.statisticService.generateStatistic(this.rightAnswers, this.wrongAnswers);
     }
 
-    // saveSheetValue(value) {
-    //     console.log('Sheet Value is: ' + value);
-    //     this.questionService.updateSheetValue(value);
-    // }
+    clearStatistic(): void {
+        this.statisticService.clearValues();
+    }
+
 
 }

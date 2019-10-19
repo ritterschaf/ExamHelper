@@ -18,6 +18,7 @@ import {SQLitePorter} from '@ionic-native/sqlite-porter/ngx';
 // import {SQLiteMock} from '@ionic-native-mocks/sqlite';
 
 import {HttpClientModule} from '@angular/common/http';
+import {File} from '@ionic-native/file/ngx';
 
 
 // This class is used, to mock SQLite for the browser. SQLite - as an @ionic-native plugin - isn't available
@@ -46,6 +47,7 @@ import {HttpClientModule} from '@angular/common/http';
         SQLite,
         SQLitePorter,
         KatexModule,
+        File,
         {provide: RouteReuseStrategy, useClass: IonicRouteStrategy}
     ],
     bootstrap: [AppComponent]
