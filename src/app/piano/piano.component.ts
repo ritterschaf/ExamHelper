@@ -48,7 +48,7 @@ export class PianoComponent implements OnInit, OnDestroy {
     }
 
     ngOnDestroy() {
-        this.shSub.unsubscribe();
+        // this.shSub.unsubscribe();
         // memory leak guard step.
     }
 

@@ -24,7 +24,10 @@ export class QuestionsComponent implements OnInit, OnDestroy {
 
     slideOpts = {
         slidesPerView: 1,
-        lockSwipes: true
+        lockSwipes: true,
+        allowTouchMove: false,
+        lockSwipeToNext: true,
+        lockSwipeToPrev: true,
     };
 
     equation: string;

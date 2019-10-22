@@ -1,6 +1,6 @@
 <ion-segment color='primary'>
-    <ion-segment-button  (click)="switch('questionbox')">Questions</ion-segment-button>
-    <ion-segment-button  (click)="switch('exambox')">Exam</ion-segment-button>
+    <ion-segment-button  (click)="switch('questionbox')">Fragen eingeben</ion-segment-button>
+    <ion-segment-button  (click)="switch('exambox')">Prüfen</ion-segment-button>
     <ion-segment-button  (click)="switch('statistic')">Statistik</ion-segment-button>
 </ion-segment>
 <ion-grid [ngSwitch]="boxes">
@@ -8,7 +8,7 @@
         <ion-row>
             <ion-col>
                 <ion-item>
-                    <ion-label position="floating">Question</ion-label>
+                    <ion-label position="floating">Frage eingeben</ion-label>
                     <ion-textarea [(ngModel)]="ques"></ion-textarea>
                 </ion-item>
             </ion-col>
@@ -16,13 +16,13 @@
         <ion-row>
             <ion-col>
                 <ion-item>
-                    <ion-label position="floating">Answer A</ion-label>
+                    <ion-label position="floating">Antwort A/Lösung</ion-label>
                     <ion-input [(ngModel)]="ansA" type="text"></ion-input>
                 </ion-item>
             </ion-col>
             <ion-col>
                 <ion-item>
-                    <ion-label position="floating">Answer B</ion-label>
+                    <ion-label position="floating">Antwort B</ion-label>
                     <ion-input [(ngModel)]="ansB" type="text"></ion-input>
                 </ion-item>
             </ion-col>
@@ -30,37 +30,37 @@
         <ion-row>
             <ion-col>
                 <ion-item>
-                    <ion-label position="floating">Answer C</ion-label>
+                    <ion-label position="floating">Antwort C</ion-label>
                     <ion-input [(ngModel)]="ansC" type="text"></ion-input>
                 </ion-item>
             </ion-col>
             <ion-col>
                 <ion-item>
-                    <ion-label position="floating">Answer D</ion-label>
+                    <ion-label position="floating">Antwort D</ion-label>
                     <ion-input [(ngModel)]="ansD" type="text"></ion-input>
                 </ion-item>
             </ion-col>
         </ion-row>
         <ion-radio-group>
             <ion-item (ionSelect)="radioSelect($event)">
-                <ion-label>Text</ion-label>
+                <ion-label>Textfrage</ion-label>
                 <ion-radio name="text" value="text"></ion-radio>
             </ion-item>
             <ion-item (ionSelect)="radioSelect($event)">
-                <ion-label>Noten</ion-label>
+                <ion-label>Notenfrage</ion-label>
                 <ion-radio name="sheet" value="sheet"></ion-radio>
             </ion-item>
             <ion-item (ionSelect)="radioSelect($event)">
-                <ion-label>Mathe</ion-label>
+                <ion-label>Mathefrage</ion-label>
                 <ion-radio name="math" value="math"></ion-radio>
             </ion-item>
         </ion-radio-group>
 
-        <ion-button color="primary" expand="block" (click)="saveQuestion()">Save</ion-button>
+        <ion-button color="primary" expand="block" (click)="saveQuestion()">Speichern</ion-button>
     </div>
     <ion-row *ngSwitchCase="'exambox'">
         <!--<ion-list id="exam-box">-->
-        <ion-slides #examslider pager="true" [options]="slideOpts">
+        <ion-slides #examslider scrollbar="true" [options]="slideOpts">
             <ion-slide *ngFor="let question of questions">
                 <div *ngIf="question.answertype == 'text'">
                     <ion-textarea readonly="true">{{question.question}}</ion-textarea>
@@ -91,7 +91,7 @@
                     <ion-button
                             (click)="checkQuestion(question.question, question.answerD)">{{question.answerD}}
                     </ion-button>
-                    <!--<app-piano></app-piano>-->
+                    <app-piano></app-piano>
                 </div>
                 <div *ngIf="question.answertype == 'math'">
                     <ion-item>
@@ -115,7 +115,7 @@
             </ion-slide>
             <ion-slide>
                 <h4>Statistik anschauen?</h4>
-                <ion-button (click)="sendToStatistic()">End</ion-button>
+                <ion-button (click)="sendToStatistic()">Ende</ion-button>
                 <!--<ion-button [routerLink]="['/home/statistic']">Statistik füttern</ion-button>-->
                 <ion-button (click)="sendToStatistic()">Statistik füttern</ion-button>
 

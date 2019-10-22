@@ -23,7 +23,7 @@ export class QuestionService {
 
     // private sheetValue = new Subject<string>();
     // private questionObs = new Subject<Question>();
-    // private questions: Question[] = [
+    // private questionsS: Question[] = [
     //     {
     //         id: 1,
     //         question: 'Was ist die Bedeutung von bird?',
@@ -83,31 +83,9 @@ export class QuestionService {
         private sqlite: SQLite,
         private http: HttpClient, public file: File) {
 
-        // this.plt.ready().then(() => {
-        //     this.sqlite.create({
-        //         name: 'questions.db',
-        //         location: 'default'
-        //     }).catch(e => console.error('This is db error on create: ', e))
-        //         .then((db: SQLiteObject) => {
-        //             this.database = db;
-        //             this.seedDatabase();
-        //         }).catch(e => console.error('This is db error: ', e));
-        // });
-
-        // this.file.createFile(this.file.dataDirectory, 'questions.json', true);
-        // console.log('questionarray: ', this.questionarray);
-        // this.file.writeFile(this.file.dataDirectory, 'questions.json', JSON.stringify(this.questionarray), {replace: true});
-        // fetch('../../assets/questionpool.json').then(res => res.json())
-        //     .then(json => {
-        //         this.questions = json;
-        //
-        //     });
-        //
-        // console.log('Constructor work finished.');
     }
 
     jsonload() {
-
 
         if (this.file.checkFile(this.file.dataDirectory, 'questions.json')) {
             // fetch(this.file.dataDirectory + 'questions.json').then(res => res.json())
@@ -124,43 +102,6 @@ export class QuestionService {
         } else {
             this.file.createFile(this.file.dataDirectory, 'questions.json', false);
         }
-    }
-
-    seedDatabase() {
-        this.http.get('assets/startup.sql', {responseType: 'text'})
-            .subscribe(sql => {
-                this.sqlitePorter.importSqlToDb(this.database, sql)
-                    .then(_ => {
-                        this.loadQuestions();
-                        this.dbReady.next(true);
-                    })
-                    .catch(e => console.error('This is db error: ', e));
-
-            });
-    }
-
-
-    loadQuestions() {
-        return this.database.executeSql('SELECT * FROM questionlist', []).then(data => {
-            const ques: Question[] = [];
-
-            if (data.rows.length > 0) {
-                for (let i = 0; i < data.rows.length; i++) {
-                    ques.push({
-                        id: data.rows.item(i).id,
-                        question: data.rows.item(i).question,
-                        answerA: data.rows.item(i).answerA,
-                        answerB: data.rows.item(i).answerB,
-                        answerC: data.rows.item(i).answerC,
-                        answerD: data.rows.item(i).answerD,
-                        answertype: data.rows.item(i).answertype,
-                        rights: data.rows.item(i).rights
-                    });
-                }
-            }
-            // subscribers to questionSubject get new array ques
-            this.questionSubject.next(ques);
-        });
     }
 
     saveQuestion(data) {
@@ -184,9 +125,7 @@ export class QuestionService {
         // return this.getAllQuestions();
         // this.file.createFile('../../assets/', 'newFile.json', true).then(_ => console.log('Creation worked')).catch(err =>
         //     console.log('Creation didnt work'));
-        this.file.writeExistingFile(this.file.dataDirectory, 'questions.json', JSON.stringify(this.questionsS)).then(() => {
-            console.log('Written to file.');
-        });
+        this.writeToFile();
 
         // return this.database.executeSql(
         // 'INSERT INTO questionlist(question, answera, answerb, answerc, answerd, answertype) VALUES(?, ?, ?, ?, ?, ?) ', data)
@@ -218,9 +157,7 @@ export class QuestionService {
                 ques.rights = ques.rights + 1;
                 console.log('new rights: ', ques.rights);
                 this.questionSubject.next(this.questionsS);
-                this.file.writeExistingFile(this.file.dataDirectory, 'questions.json', JSON.stringify(this.questionsS)).then(() => {
-                    console.log('Updated rights written to file.');
-                });
+                this.writeToFile();
             }
         }
     }
@@ -251,14 +188,16 @@ export class QuestionService {
         });
         this.questionSubject.next(this.questionsS);
         console.log('New array:', this.questionsS);
-        this.file.writeExistingFile(this.file.dataDirectory, 'questions.json', JSON.stringify(this.questionsS));
+        this.writeToFile();
     }
 
 
-    writeJSON(filename, object) {
-        return this.file.writeFile(this.file.dataDirectory, filename, JSON.stringify(object), {replace: true})
-            .then(() => console.log('Executed Filework'))
-            ;
+    writeToFile() {
+        // return this.file.writeFile(this.file.dataDirectory, filename, JSON.stringify(object), {replace: true})
+        //     .then(() => console.log('Executed Filework'))
+        //     ;
+        return this.file.writeExistingFile(this.file.dataDirectory, 'questions.json', JSON.stringify(this.questionsS))
+            .then(() => console.log('Executed Filework'));
     }
 
     // dbOpen() {
@@ -289,6 +228,43 @@ export class QuestionService {
     //
     // dbClose() {
     //     this.db.close();
+    // }
+
+    // seedDatabase() {
+    //     this.http.get('assets/startup.sql', {responseType: 'text'})
+    //         .subscribe(sql => {
+    //             this.sqlitePorter.importSqlToDb(this.database, sql)
+    //                 .then(_ => {
+    //                     this.loadQuestions();
+    //                     this.dbReady.next(true);
+    //                 })
+    //                 .catch(e => console.error('This is db error: ', e));
+    //
+    //         });
+    // }
+
+
+    // loadQuestions() {
+    //     return this.database.executeSql('SELECT * FROM questionlist', []).then(data => {
+    //         const ques: Question[] = [];
+    //
+    //         if (data.rows.length > 0) {
+    //             for (let i = 0; i < data.rows.length; i++) {
+    //                 ques.push({
+    //                     id: data.rows.item(i).id,
+    //                     question: data.rows.item(i).question,
+    //                     answerA: data.rows.item(i).answerA,
+    //                     answerB: data.rows.item(i).answerB,
+    //                     answerC: data.rows.item(i).answerC,
+    //                     answerD: data.rows.item(i).answerD,
+    //                     answertype: data.rows.item(i).answertype,
+    //                     rights: data.rows.item(i).rights
+    //                 });
+    //             }
+    //         }
+    //         // subscribers to questionSubject get new array ques
+    //         this.questionSubject.next(ques);
+    //     });
     // }
 
 

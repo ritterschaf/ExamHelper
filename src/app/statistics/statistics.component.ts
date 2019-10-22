@@ -16,10 +16,10 @@ export class StatisticsComponent implements OnInit {
     statisticQuestionSub: Subscription;
     questions: Question[];
 
-    private deletable = false;
-    private right: number;
-    private wrong: number;
-    private amount: number;
+    deletable = false;
+    right: number;
+    wrong: number;
+    amount: number;
 
     constructor(
         private questionService: QuestionService,
