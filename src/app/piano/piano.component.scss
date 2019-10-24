@@ -47,8 +47,8 @@ ul .white:active {
 }
 
 .black {
-  height:7em;
-  width:2em;
+  height:6em;
+  width:1.5em;
   margin:0 0 0 -1em;
   z-index:2;
   border:1px solid #000;
@@ -62,8 +62,12 @@ ul .white:active {
   background:linear-gradient(to right,#444 0%,#222 100%)
 }
 
-.a,.g,.f,.d,.c {
+.a,.g,.d,.b,.e {
   margin:0 0 0 -1em
+}
+
+.c {
+  border-right: 1px solid #bbb;
 }
 
 ul li:first-child {

@@ -91,7 +91,7 @@
                     <ion-button
                             (click)="checkQuestion(question.question, question.answerD)">{{question.answerD}}
                     </ion-button>
-                    <app-piano></app-piano>
+                    <app-piano [qValue]=question.question></app-piano>
                 </div>
                 <div *ngIf="question.answertype == 'math'">
                     <ion-item>

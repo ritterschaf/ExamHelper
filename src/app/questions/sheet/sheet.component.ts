@@ -10,12 +10,22 @@ import * as vexflow from 'vexflow';
 export class SheetComponent implements OnInit {
     number = null;
     @Input() shValue = '';
+    shValue2 = 'd#';
     @Input() id: number;
+
     // private name = 'boo' + this.id.toString();
     constructor() {
     }
 
     ngOnInit() {
+
+        if (this.shValue === 'b' || this.shValue === 'B') {
+            this.shValue = 'bb';
+        }
+        if (this.shValue === 'h' || this.shValue === 'H') {
+            this.shValue = 'x';
+            // deutsches "h" ist auf englisch "b".
+        }
 
         // this "converts" the note-value into one vex can read, with varying octaves
         this.number = Math.floor(Math.random() * 3) + 3;
@@ -47,10 +57,21 @@ export class SheetComponent implements OnInit {
         // Connect it to the rendering context and draw!
         stave.setContext(context).draw();
 
-        const notes = [
-            new VF.StaveNote({keys: [this.shValue], duration: 'q'})
-        ];
+        let notes = [];
 
+        if (this.shValue.includes('#') && this.shValue !== 'b' || this.shValue.includes('b') && this.shValue !== 'b') {
+            notes = [
+                new VF.StaveNote({
+                    keys: [this.shValue],
+                    duration: 'q'
+                }).addAccidental(0, new VF.Accidental(this.shValue.slice(1, -2)))
+            ];
+
+        } else {
+            notes = [
+                new VF.StaveNote({keys: [this.shValue], duration: 'q'})
+            ];
+        }
         // Create a voice in 4/4 and add above notes
         const voice = new VF.Voice({num_beats: 1, beat_value: 4});
         voice.addTickables(notes);

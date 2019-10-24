@@ -120,6 +120,13 @@ export class QuestionsComponent implements OnInit, OnDestroy {
             // this.questions = this.questionService.saveQuestion(array);
             this.questionService.saveQuestion(array);
         }
+
+        this.ques = '';
+        this.ansA = '';
+        this.ansB = '';
+        this.ansC = '';
+        this.ansD = '';
+
     }
 
     // this checks the question and gives out an alert to inform you
@@ -160,6 +167,9 @@ export class QuestionsComponent implements OnInit, OnDestroy {
 
     sendToStatistic() {
         this.statisticService.generateStatistic(this.rightAnswers, this.wrongAnswers);
+        this.wrongAnswers = 0;
+        this.rightAnswers = 0;
+        // reset wrong and right answer counter
     }
 
     clearStatistic(): void {

@@ -13,7 +13,7 @@ import {File} from '@ionic-native/file/ngx';
 })
 export class QuestionService {
     whatever: any;
-    private highestId = 1;
+    private highestId;
     private database: SQLiteObject;
     private dbReady: BehaviorSubject<boolean> = new BehaviorSubject(false);
     private questionSubject = new BehaviorSubject([]);
@@ -96,7 +96,7 @@ export class QuestionService {
             //     });
             this.file.readAsText(this.file.dataDirectory, 'questions.json').then(data => {
                 this.questionsS = JSON.parse(data);
-                console.log('read out data: ', this.questionsS);
+                this.highestId = this.questionsS.length;
                 this.questionSubject.next(this.questionsS);
             });
         } else {
@@ -197,8 +197,13 @@ export class QuestionService {
         //     .then(() => console.log('Executed Filework'))
         //     ;
         return this.file.writeExistingFile(this.file.dataDirectory, 'questions.json', JSON.stringify(this.questionsS))
-            .then(() => console.log('Executed Filework'));
+            .then(() => {
+                console.log('Executed Filework');
+                this.jsonload();
+                // gespeichertes Zeug wird jetzt gleich wieder geladen, damits intern auch aktuell ist.
+            });
     }
+
 
     // dbOpen() {
     //
